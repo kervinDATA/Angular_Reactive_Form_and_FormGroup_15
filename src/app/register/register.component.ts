@@ -11,26 +11,27 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
+  registerForm = this.fb.group({
+    username: ['', Validators.required],
+    address: this.fb.group({
+      street: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      city: ['', Validators.required]
+    }),
+    credentials: this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    })   
+  });
+
   newUser: any;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      address: this.formBuilder.group({
-        street: ['', Validators.required],
-        postalCode: ['', Validators.required],
-        city: ['', Validators.required]
-      })
-    });
-  }
+  constructor(private fb: FormBuilder) {}
 
   onSubmit() {
+    console.log(this.registerForm.value);
     if (this.registerForm.valid) {
-      this.newUser = this.registerForm.value;
-      console.log('New User:', this.newUser);
+      this.newUser = this.registerForm.value;;
     }
   }
 }
