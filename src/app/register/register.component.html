@@ -1,0 +1,65 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Nom d'utilisateur :</label>
+    <input id="username" formControlName="username" />
+    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
+      Le nom d'utilisateur est requis.
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email :</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+      Un email valide est requis.
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Mot de passe :</label>
+    <input id="password" type="password" formControlName="password" />
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+      Le mot de passe est requis (au moins 6 caractères).
+    </div>
+  </div>
+
+  <fieldset formGroupName="address">
+    <legend>Adresse</legend>
+
+    <div>
+      <label for="street">Rue :</label>
+      <input id="street" formControlName="street" />
+      <div *ngIf="registerForm.get('address')?.get('street')?.invalid && registerForm.get('address')?.get('street')?.touched" class="error-message">
+        La rue est requise.
+      </div>
+    </div>
+
+    <div>
+      <label for="postalCode">Code postal :</label>
+      <input id="postalCode" formControlName="postalCode" />
+      <div *ngIf="registerForm.get('address')?.get('postalCode')?.invalid && registerForm.get('address')?.get('postalCode')?.touched" class="error-message">
+        Le code postal est requis.
+      </div>
+    </div>
+
+    <div>
+      <label for="city">Ville :</label>
+      <input id="city" formControlName="city" />
+      <div *ngIf="registerForm.get('address')?.get('city')?.invalid && registerForm.get('address')?.get('city')?.touched" class="error-message">
+        La ville est requise.
+      </div>
+    </div>
+  </fieldset>
+
+  <button type="submit" [disabled]="registerForm.invalid">Inscription</button>
+</form>
+
+<!-- Afficher les informations de l'utilisateur nouvellement inscrit -->
+<div *ngIf="newUser" class="user-info">
+  <h2>Nouvel Utilisateur Inscrit</h2>
+  <p><strong>Nom d'utilisateur :</strong> {{ newUser.username }}</p>
+  <p><strong>Email :</strong> {{ newUser.email }}</p>
+  <p><strong>Mot de passe :</strong> {{ newUser.password }}</p>
+  <p><strong>Adresse :</strong> {{ newUser.address.street }}, {{ newUser.address.postalCode }}, {{ newUser.address.city }}</p>
+</div>
+
