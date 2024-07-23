@@ -39,8 +39,10 @@
     <div>
       <label for="email">Email :</label>
       <input id="email" formControlName="email" />
-      <div *ngIf="registerForm.get('credentials')?.get('email')?.invalid && registerForm.get('credentials')?.get('email')?.touched" class="error-message">
-        Un email valide est requis.
+      <div *ngIf="registerForm.get('credentials')?.get('email')?.errors && !registerForm.get('credentials')?.get('email')?.pristine" class="error-message">
+        <div [hidden]="!registerForm.get('credentials')?.get('email')?.errors?.['required']">Un email est requis.</div>
+        <div [hidden]="!registerForm.get('credentials')?.get('email')?.errors?.['email']">Format d'email invalide.</div>
+        <div [hidden]="!registerForm.get('credentials')?.get('email')?.errors?.['email']">L'email doit se terminer par &#64;wilder.school.</div>
       </div>
     </div>
 
